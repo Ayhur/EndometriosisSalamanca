@@ -2,7 +2,7 @@ package modelos;
 
 public class Usuario {
 
-	private int id,municipio, pais;
+	private int id, municipio, pais;
 	private String nombre, apellidos, dni, email, usuario, password;
 	private String fechaNacimiento;
 	private int realizado;
@@ -24,7 +24,7 @@ public class Usuario {
 		this.municipio = municipio;
 		this.realizado = 0;
 		this.pais = pais;
-		
+
 	}
 
 	public int getId() {
@@ -186,6 +186,13 @@ public class Usuario {
 		} else if (!usuario.equals(other.usuario))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", municipio=" + municipio + ", pais=" + pais + ", nombre=" + nombre
+				+ ", apellidos=" + apellidos + ", dni=" + dni + ", email=" + email + ", usuario=" + usuario
+				+ ", password=" + password + ", fechaNacimiento=" + fechaNacimiento + ", realizado=" + realizado + "]";
 	}
 
 }

@@ -84,7 +84,8 @@
                                             <input type="text"  class="form-control" placeholder="DNI *" name="campoDNI" value="${dniRec}" required />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text"  class="form-control" placeholder="Año nacimiento *" data-date-format="DD MMMM YYYY" onfocus="(this.type='date')" onblur="(this.type='text')" name="campoFechaNacimiento"  value="${fechaRec}" required />
+<%--                                             <input type="text"  class="form-control" placeholder="Año nacimiento *" onfocus="(this.type='date')" onblur="(this.type='text')" name="campoFechaNacimiento"  value="${fechaRec}" required /> --%>
+                                            <input type="date"  class="form-control" placeholder="Año nacimiento *" name="campoFechaNacimiento"  value="${fechaRec}" required />
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control"  placeholder="Repite contraseña *" name="campoRepetirPassword" required />
@@ -100,6 +101,8 @@
                                             <input type="checkbox" name="aceptar_terminos" id="aceptar_terminos" value="aceptar_terminos" required />
                                             <label class="form-control" id="terminoslbl">He leído y acepto la <a href="#" target="_blank">Política de Privacidad</a></label>
                                         </div>
+<!--                                    <input type="submit" class="btnRegister"  value="Volver" formaction="login.jsp"/> -->
+                                        <button class="btnRegister"  value="Volver" formaction="login.jsp" formnovalidate="false">Volver</button>
                                         <input type="submit" class="btnRegister"  value="Register"/>
                                     </div>
                                 </div>
@@ -155,6 +158,7 @@
                                             <input type="text" class="form-control" placeholder="`Answer *" value="" />
                                         </div>
                                         <input type="submit" class="btnRegister"  value="Registrar"/>
+                                        <input type="submit" class="btnRegister"  value="Volver" formaction="login.jsp"/>
                                     </div>
                                 </div>
                             </div>

@@ -50,7 +50,7 @@ public class ServletRegistroUsuario extends HttpServlet {
 		// valido nombre
 //		String expresionRegularnombre = "^([a-z ραινσϊη]{2,20})$/i";
 		String expresionRegularnombre = "^([a-z ραινσϊη]{2,20})$";
-		Pattern pattern = Pattern.compile(expresionRegularnombre);
+		Pattern pattern = Pattern.compile(expresionRegularnombre, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(nombre);
 		if (!matcher.matches()) {
 			System.out.println("nombre no valido");
@@ -62,7 +62,7 @@ public class ServletRegistroUsuario extends HttpServlet {
 		
 		// valido apellidos//
 		String expresionRegularapellidos = "^([a-z ραινσϊη]{2,50})$/i";
-		Pattern pattern1 = Pattern.compile(expresionRegularapellidos);
+		Pattern pattern1 = Pattern.compile(expresionRegularapellidos, Pattern.CASE_INSENSITIVE);
 		Matcher matcher1 = pattern1.matcher(apellidos);
 		if (!matcher1.matches()) {
 			System.out.println("apellidos no valido ");
