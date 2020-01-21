@@ -1,3 +1,4 @@
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <html>
 	<head>
 <!-- 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
@@ -9,12 +10,26 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="css/registro.css">
+		
+		
+		<c:if test='${null != dataUserReg} '> 
+<%-- 			<c:set value="someclass" var="in"></c:set> --%>
+			<c:set var = "nombreRec" value = "${dataUserReg.nombre}"/>
+			<c:set var = "apeRec" value = "${dataUserReg.apellidos}"/>
+			<c:set var = "fechaRec" value = "${dataUserReg.fechaNacimiento}"/>
+<%-- 			<c:set var = "dniRec" value = "${dataUserReg.dni}"/> --%>
+			<c:set var = "emailRec" value = "${dataUserReg.email}"/>
+			<c:set var = "userRec" value = "${dataUserReg.usuario}"/>
+<%-- 			<c:set var = "passRec" value = "${dataUserReg.password}"/> --%>
+<%-- 			<c:set var = "coincPassRec" value = "${dataUserReg.nombre}"/> --%>
+		</c:if>
+		
 	</head>
 	
-<body>
+	<body>
 
-<!------ Include the above in your HEAD tag ---------->
-<div class="container register">
+		<!------ Include the above in your HEAD tag ---------->
+		<div class="container register" id="contenedor">
                 <div class="row contenedorRegistro">
                     <div class="col-md-3 register-left">
                         <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
@@ -26,42 +41,71 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <h3 class="register-heading">Registrate como nueva usuaria</h3>
+                                
+                                <form action="ServletRegistroUsuario"	 method="post">
                                 <div class="row register-form">
+                                	
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Nombre *" value="" />
+                                            <input type="text" class="form-control" placeholder="Nombre *" name="campoNombre" value="${nombreRec}" required />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Apellidos *" value="" />
+                                            <input type="text" class="form-control" placeholder="Apellidos *" name="campoApellidos" value="${apeRec}" required />
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control" placeholder="Contraseña *" value="" />
+                                            <input type="text" class="form-control" placeholder="Usuario *" name="campoUsuario" value="${userRec}" required />
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control"  placeholder="Repite contraseña *" value="" />
+                                            <input type="password" class="form-control" placeholder="Contraseña *" name="campoPassword" required />
                                         </div>
+                                        <!-- 					SELECTOR DE PAISES			 -->
+                                        <div class="form-group">
+                                            <select class="form-control" name="selectPais" id="selectPais" onChange="mostrarComunidad();">
+                                                <option class="hidden"  selected disabled>Selecciona tu pais</option>
+                                                <c:forEach items="${paises}" var="pais">
+							            			<option class="option" value="${pais.id}">${pais.nombre}</option>
+							            		</c:forEach>
+                                            </select>
+                                        </div>
+                                        <!-- 						FIN PAISES				 -->
+                                        <!-- 					SELECTOR DE LOCALIDADES			 -->
+                                          <div class="form-group" id='municipios'>
+                                            <select class="form-control" name="selectMunicipios" id="selectMunicipios">
+                                                <option class="hidden"  selected disabled>Selecciona tu localidad</option>
+                                            </select>
+                                        </div>
+                                        <!-- 					FIN LOCALIDADES					 -->
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email *" value="" />
+                                            <input type="email" class="form-control" placeholder="Email *" name="campoEmail" value="${emailRec}" required />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Telefono *" value="" />
+                                            <input type="text"  class="form-control" placeholder="DNI *" name="campoDNI" value="${dniRec}" required />
                                         </div>
                                         <div class="form-group">
-                                            <select class="form-control">
-                                                <option class="hidden"  selected disabled>Selecciona tu pais</option>
-                                                <option>España</option>
-                                                <option>Portugal</option>
-                                                <option>Francia</option>
+                                            <input type="text"  class="form-control" placeholder="Año nacimiento *" data-date-format="DD MMMM YYYY" onfocus="(this.type='date')" onblur="(this.type='text')" name="campoFechaNacimiento"  value="${fechaRec}" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control"  placeholder="Repite contraseña *" name="campoRepetirPassword" required />
+                                        </div>
+                                        <!-- 					SELECTOR DE PROVINCIAS			 -->
+                                        <div class="form-group" id='comunidades'>
+                                            <select class="form-control" name="selectcomunidades" id="selectcomunidades" onChange="mostrarMunicipios();" >
+                                                <option class="hidden"  selected disabled>Selecciona tu comunidad</option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Enter Your Answer *" value="" />
+                                        <!-- 						FIN PROVINCIAS				 -->
+                                         <div class="form-group">
+                                            <input type="checkbox" name="aceptar_terminos" id="aceptar_terminos" value="aceptar_terminos" required />
+                                            <label class="form-control" id="terminoslbl">He leído y acepto la <a href="#" target="_blank">Política de Privacidad</a></label>
                                         </div>
                                         <input type="submit" class="btnRegister"  value="Register"/>
                                     </div>
                                 </div>
+                                </form>
+                                
+                                
                             </div>
                             <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <h3  class="register-heading">Apply as a Hirer</h3>
@@ -77,7 +121,14 @@
                                             <input type="email" class="form-control" placeholder="Email *" value="" />
                                         </div>
                                         <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Usuario *" value="" />
+                                        </div>
+                                        <div class="form-group">
                                             <input type="text" maxlength="10" minlength="10" class="form-control" placeholder="Phone *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="checkbox" class="form-control" name="aceptar_terminos" id="aceptar_terminos" value="aceptar_terminos" required />
+                                            <label class="form-control" id="terminoslbl">He leído y acepto la <a href="#" target="_blank">Política de Privacidad</a></label>
                                         </div>
 
 
@@ -88,6 +139,9 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control" placeholder="Confirm Password *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="date"  class="form-control" placeholder="Año nacimiento *" value="" />
                                         </div>
                                         <div class="form-group">
                                             <select class="form-control">
@@ -109,5 +163,13 @@
                 </div>
 
             </div>
-</body>
+	
+		<!--  JQUERY -->
+		<script type="text/javascript" src="./jquery/jquery.js"></script>
+		<script type="text/javascript" src="./jquery/registroJQ.js"></script>
+		
+		<!--  JS -->
+		<script src="./js/NuevoRegistro.js"></script>
+	
+	</body>
 </html>
