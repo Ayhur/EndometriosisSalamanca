@@ -73,7 +73,8 @@ public class ServletCargaDeElementosRegistro extends HttpServlet {
 			System.out.println("Se carga el combo de paises");
 			PaisesDAO daoPaises = new PaisesDAOImpl();
 			request.setAttribute("paises", daoPaises.listarPaises());
-			request.getRequestDispatcher("registroUsuario.jsp").forward(request, response);
+			request.getRequestDispatcher("registro2.jsp").forward(request, response);
+			//			request.getRequestDispatcher("registroUsuario.jsp").forward(request, response);
 		}
 		System.out.println("Salgo de servletCargDeElementosRegistro");
 	}

@@ -22,11 +22,13 @@ $("#selectPregunta").change(
 					// Busco elemento canvas si existe
 					if (document.getElementById("myChart")) {
 						$("#myChart").remove();
-						$('.formularioRegistroPregunta').after("<canvas id='myChart' width='800' height='500'></canvas>");
+						$('.formularioRegistroPregunta').after("<canvas id='myChart'></canvas>");
+//						$('.formularioRegistroPregunta').after("<canvas id='myChart' width='800' height='500'></canvas>");
 						crearDiagramaDeBarras(json);
 					}
 					else{
-						$('.formularioRegistroPregunta').after("<canvas id='myChart' width='800' height='500'></canvas>");
+						$('.formularioRegistroPregunta').after("<canvas id='myChart'></canvas>");
+//						$('.formularioRegistroPregunta').after("<canvas id='myChart' width='800' height='500'></canvas>");
 						crearDiagramaDeBarras(json);
 					}
 					

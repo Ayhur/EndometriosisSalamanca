@@ -34,12 +34,22 @@ public class ServletRegistroUsuario extends HttpServlet {
 		String password = request.getParameter("campoPassword");
 		String repPassword = request.getParameter("campoRepetirpassword");
 		Integer pais = Integer.parseInt(request.getParameter("selectPais"));
-		String municipio = request.getParameter("selectMunicipios");
+		Integer municipio;
+		if (null != request.getParameter("selectMunicipios")) {
+			municipio = Integer.parseInt(request.getParameter("selectMunicipios"));
+		} else {
+			municipio = null;
+		}
+		
+		Usuario newUser = new Usuario(nombre, apellidos, dni, email, usuario, repPassword, fechaNacimiento, municipio, pais);
+		System.out.println("Esto es objeto usuario nuevo");
+		System.out.println(newUser.toString());
 		
 		/* INICIO validaciones */
 		
 		// valido nombre
-		String expresionRegularnombre = "^([a-z ραινσϊη]{2,20})$/i";
+//		String expresionRegularnombre = "^([a-z ραινσϊη]{2,20})$/i";
+		String expresionRegularnombre = "^([a-z ραινσϊη]{2,20})$";
 		Pattern pattern = Pattern.compile(expresionRegularnombre);
 		Matcher matcher = pattern.matcher(nombre);
 		if (!matcher.matches()) {
@@ -110,7 +120,8 @@ public class ServletRegistroUsuario extends HttpServlet {
 		if (!matcher6.matches()) {
 			System.out.println("la password no tiene lo caracteres necesarios ");
 			request.setAttribute("mensajepassword", "La password tiene que tener entre 8 y 20 caracteres");
-			request.getRequestDispatcher("registroUsuario.jsp").forward(request, response);
+			request.getRequestDispatcher("registro2.jsp").forward(request, response);
+//			request.getRequestDispatcher("registroUsuario.jsp").forward(request, response);
 			return;
 		}
 		
@@ -140,13 +151,16 @@ public class ServletRegistroUsuario extends HttpServlet {
 		 
 		/** Fin transformacion fecha */
 
-		Usuario usuarios = new Usuario(nombre, apellidos, dni, email, usuario, password, fechaNacimiento,
-				Integer.parseInt(municipio),pais);
+		Usuario usuarios = new Usuario(nombre, apellidos, dni, email, usuario, password, fn.toString(),
+				municipio, pais);
+//		Usuario usuarios = new Usuario(nombre, apellidos, dni, email, usuario, password, fechaNacimiento,
+//				municipio, pais);
 		
 		
 		if(enc) {
 			request.setAttribute("dataUserReg", usuarios);
-			request.getRequestDispatcher("registroUsuario.jsp").forward(request, response);
+			request.getRequestDispatcher("registro2.jsp").forward(request, response);
+			//			request.getRequestDispatcher("registroUsuario.jsp").forward(request, response);
 		}
 		else {
 			UsuariosDAO daoUsuario = new UsuariosDAOImpl();
